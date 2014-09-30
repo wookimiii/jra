@@ -1,0 +1,12 @@
+#!/bin/bash
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# remove the whitespace
+BRANCH=${BRANCH// /}
+
+# [[ sed-4.2.2.tar.bz2 == *tar.bz2 ]] && echo matched
+if [[ "$BRANCH" =~ [A-Z]+-([0-9])+ ]]; then
+    open "http://$JIRA_HOST/browse/$BASH_REMATCH"
+else
+    echo "No jira ticket found in the branch"
+fi
