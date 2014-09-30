@@ -13,7 +13,7 @@ export JIRA_HOST=jira.host.com
 
 install jra in a directory that's part of your path
 ```
-curl https://github.com/wookimiii/jra/jira > jra
+curl https://raw.githubusercontent.com/wookimiii/jra/master/jra > jra
 chmod +x jra
 ```
 
