@@ -1,12 +1,24 @@
 #!/bin/bash
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
+# Open jira ticket based on current git branch
+# Before using it: export JIRA_HOST=jira.host.com
 
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+fi
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 # remove the whitespace
 BRANCH=${BRANCH// /}
-
 # [[ sed-4.2.2.tar.bz2 == *tar.bz2 ]] && echo matched
 if [[ "$BRANCH" =~ [A-Z]+-([0-9])+ ]]; then
-    open "http://$JIRA_HOST/browse/$BASH_REMATCH"
+  URL="http://$JIRA_HOST/browse/$BASH_REMATCH"
+
+  if [[ $platform == 'linux' ]]; then
+    xdg-open $URL
+  else
+    open $URL
+  fi
 else
-    echo "No jira ticket found in the branch"
+  echo "No jira ticket found in the branch"
 fi
