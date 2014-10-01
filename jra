@@ -3,8 +3,9 @@
 # Before using it: export JIRA_HOST=jira.host.com
 
 unamestr=`uname`
+open=open
 if [[ "$unamestr" == 'Linux' ]]; then
-   platform='linux'
+   open=xdg-open
 fi
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -14,11 +15,7 @@ BRANCH=${BRANCH// /}
 if [[ "$BRANCH" =~ [A-Z]+-([0-9])+ ]]; then
   URL="http://$JIRA_HOST/browse/$BASH_REMATCH"
 
-  if [[ $platform == 'linux' ]]; then
-    xdg-open $URL
-  else
-    open $URL
-  fi
+  $open $URL
 else
   echo "No jira ticket found in the branch"
 fi
