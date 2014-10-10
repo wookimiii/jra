@@ -16,7 +16,7 @@ else
   BRANCH=${BRANCH// /}
 
   if [[ "$BRANCH" =~ [A-Z]+-([0-9])+ ]]; then
-    ticket = $BASH_REMATCH
+    ticket=$BASH_REMATCH
   else
       echo "No jira ticket found in the branch"
   fi
