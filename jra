@@ -5,17 +5,24 @@
 unamestr=`uname`
 open=open
 if [[ "$unamestr" == 'Linux' ]]; then
-   open=xdg-open
+  open=xdg-open
 fi
 
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
-# remove the whitespace
-BRANCH=${BRANCH// /}
-# [[ sed-4.2.2.tar.bz2 == *tar.bz2 ]] && echo matched
-if [[ "$BRANCH" =~ [A-Z]+-([0-9])+ ]]; then
-  URL="http://$JIRA_HOST/browse/$BASH_REMATCH"
-
-  $open $URL
+if [ -n "$1" ]; then 
+    ticket="$1";
 else
-  echo "No jira ticket found in the branch"
+  BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  # remove the whitespace
+  BRANCH=${BRANCH// /}
+
+  if [[ "$BRANCH" =~ [A-Z]+-([0-9])+ ]]; then
+    ticket = $BASH_REMATCH
+  else
+      echo "No jira ticket found in the branch"
+  fi
+fi
+
+if [ -n "$ticket" ]; then
+  URL="http://$JIRA_HOST/browse/$ticket"
+  $open $URL
 fi
